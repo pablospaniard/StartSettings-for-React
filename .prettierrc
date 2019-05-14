@@ -5,7 +5,10 @@
     "semi": false,
     "singleQuote": true,
     "trailingComma": "none",
-    "bracketSpacing": false,
+    "bracketSpacing": true,
     "jsxBracketSameLine": false,
-    "proseWrap": "always"
+    "proseWrap": "always",
+    "[yaml]": {
+        "editor.formatOnSave": false
+    }
 }

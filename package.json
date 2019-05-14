@@ -3,33 +3,96 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "test:ci": "CI=true react-scripts test --env=jsdom --runInBand",
     "eject": "react-scripts eject",
     "precommit": "lint-staged",
-    "prepush": "yarn test:ci"
-  },
-  "dependencies": {
-    "axios": "^0.18.0",
-    "classnames": "^2.2.6",
-    "node-sass": "^4.9.3",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-redux": "^5.0.7",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4",
-    "redux": "^4.0.0",
-    "sass-loader": "^7.1.0"
+    "prepush": "yarn test:ci",
+    "build": "parcel build public/admin/js/react-admin/index.js --out-dir ./public/assets/dist --out-file main.js --no-source-maps",
+    "start": "parcel watch public/admin/js/react-admin/index.js --out-dir ./public/assets/dist --out-file main.js",
+    "pro": "NODE_ENV=production parcel watch public/admin/js/react-admin/index.js --out-dir ./public/assets/dist --out-file main.js",
+    "lint": "eslint 'public/admin/js/react-admin/**/*.{js, jsx}' --fix",
+    "stage": "lint-staged",
+    "docz:dev": "docz dev",
+    "docz:build": "docz build",
+    "test": "jest --env=jsdom",
+    "test:watch": "yarn test --watch",
+    "test:coverage": "yarn test --coverage",
+    "test:ci": "CI=true yarn test --runInBand"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.6",
-    "eslint": "^5.1.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-json": "^1.2.0",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.2.0",
-    "prettier": "^1.13.7"
+    "@babel/core": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "@emotion/babel-preset-css-prop": "^10.0.7",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "eslint": "^5.8.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-import-resolver-alias": "^1.1.1",
+    "eslint-plugin-emotion": "^10.0.7",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-react-hooks": "^1.5.1",
+    "jest": "^23.6.0",
+    "lint-staged": "^8.1.0",
+    "parcel-bundler": "^1.11.0",
+    "parcel-plugin-bundle-visualiser": "^1.2.0",
+    "parcel-plugin-eslint": "^1.0.6",
+    "prettier": "^1.14.3",
+    "react-testing-library": "6.0.4"
+  },
+  "dependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/polyfill": "^7.0.0",
+    "@emotion/core": "^10.0.7",
+    "@emotion/styled": "^10.0.7",
+    "@parcel/logger": "^1.11.0",
+    "aes-js": "^3.1.2",
+    "axios": "^0.18.0",
+    "formik": "^1.4.2",
+    "lodash": "^4.17.11",
+    "moment": "^2.23.0",
+    "prop-types": "^15.5.10",
+    "react": "^16.8.3",
+    "react-dom": "16.8.3",
+    "react-hot-loader": "^4.7.1",
+    "react-router-dom": "^4.3.1",
+    "react-window": "^1.7.2"
+  },
+  "jest": {
+    "rootDir": "./public/admin/js/react-admin",
+    "testURL": "http://localhost/",
+    "collectCoverageFrom": [
+      "<rootDir>/**/*.{js,jsx}"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/setupTests.js",
+    "testRegex": "(/__tests__/.*\\.(test|spec))\\.[jt]sx?$",
+    "moduleNameMapper": {
+      "rcl": "@messagebird/react-component-library",
+      "ui-components": "<rootDir>/components/UI",
+      "mocks(.*)$": "<rootDir>/__mocks__/availableGtProviders.js",
+      "\\.(css|svg)$": "<rootDir>/__mocks__/styleMock.js",
+      "app-constants": "<rootDir>/app-constants.js",
+      "global-api(.*)$": "<rootDir>/api.js"
+    }
+  },
+  "lint-staged": {
+    "*.(js|jsx)": [
+      "prettier --write",
+      "yarn lint",
+      "git add"
+    ]
+  },
+  "alias": {
+    "rcl": "@messagebird/react-component-library",
+    "global-api": "./public/admin/js/react-admin/api.js",
+    "components": "./public/admin/js/react-admin/components",
+    "ui-components": "./public/admin/js/react-admin/components/UI",
+    "helpers": "./public/admin/js/react-admin/helpers",
+    "app-constants": "./public/admin/js/react-admin/app-constants.js"
   }
 }
